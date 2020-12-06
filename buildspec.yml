@@ -7,6 +7,8 @@ phases:
       - apt-get update -y
       - sudo apt-get install zip gzip tar -y
       - pip3 install --upgrade pip
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 5; done"
       - ln -s /usr/local/bin/pip /usr/bin/pip
   pre_build:
     commands:
